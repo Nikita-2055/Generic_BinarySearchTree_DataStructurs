@@ -1,0 +1,33 @@
+public class Queue<Anhayt> {
+    Anhayt[] arr = (Anhayt[]) new Object[5];
+    int index_push = 0;
+    int index_pop = 0;
+
+    public void push(Anhayt x){
+        if(index_push < arr.length){
+            arr[index_push++] = x;
+        }else{
+            System.out.println("stack is full:");
+        }
+    }
+    public Anhayt pop(){
+        if(index_pop < index_push){
+            return arr[index_pop++];
+        }else if(index_pop == index_push){
+            index_pop = 0;
+            index_push = 0;
+            return null;
+        }else{
+            System.out.println("stack is empty:");
+            return null;
+        }
+    }
+
+    public boolean isEmpty(){
+        return index_pop == 0;
+    }
+    public boolean isFull(){
+        return index_push == arr.length;
+    }
+}
+
