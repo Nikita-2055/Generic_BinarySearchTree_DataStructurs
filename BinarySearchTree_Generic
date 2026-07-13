@@ -1,0 +1,213 @@
+import java.util.Comparator;
+
+class Node3<anorosh>{
+    anorosh value;
+    Node3<anorosh> aj;
+    Node3<anorosh> dzax;
+    Node3<anorosh> parent;
+    public Node3(anorosh x){
+        value = x;
+    }
+}
+public class BinarySearchTree<popoxakan> {
+    public Node3<popoxakan> skizb;
+    int count = 0;
+    Comparator<popoxakan> comparator;
+    public BinarySearchTree(Comparator<popoxakan> c) {
+        comparator = c;
+    }
+
+
+    void pushRecursive(popoxakan x, Node3<popoxakan> temp){ //insert
+        if(temp == null){
+            skizb = new Node3<popoxakan>(x);
+            count++;
+            return;
+        }else if(comparator.compare(x, temp.value) > 0){
+            if(temp.aj == null){
+                temp.aj = new Node3<popoxakan>(x);
+                temp.aj.parent = temp;
+                count++;
+                return;
+            }else{
+                pushRecursive(x,temp.aj);
+            }
+            //if datark e, miangamic aavelacnelu es
+            //datark che-> recursive kanchelu es
+        }
+        if(comparator.compare(x, temp.value) <= 0){
+            if(temp.dzax == null){
+                temp.dzax = new Node3<popoxakan>(x);
+                temp.dzax.parent = temp;
+                count++;
+                return;
+            }else{
+                pushRecursive(x,temp.dzax);
+            }
+        }
+    }
+    public void push(popoxakan x){
+        pushRecursive(x, skizb);
+    }
+    Node3<popoxakan> findpointerRecursive(popoxakan x, Node3<popoxakan> temp) {
+        if (temp == null) {
+            return null;
+        }
+        if (comparator.compare(x, temp.value) <= 0) {
+            return findpointerRecursive(x, temp.dzax);
+        }
+        if (comparator.compare(x, temp.value) > 0) {
+            return findpointerRecursive(x, temp.aj);
+        }
+        return temp;
+    }
+    public Node3<popoxakan> findpointer(popoxakan x){
+        Node3<popoxakan> flag = findpointerRecursive(x,skizb);
+        return flag;
+    }
+
+
+
+
+    public void remove2(popoxakan x){
+        Node3<popoxakan> a = findpointer(x);
+        if(a == null){
+            return;
+        }else if(a.aj != null){
+            Node3<popoxakan> b = a.aj;
+            while (b.dzax != null){
+                b = b.dzax;
+            }
+            a.value = b.value;
+            b.parent.dzax = null;
+            return;
+        }else if(a.dzax != null){
+            Node3<popoxakan> b = a.dzax;
+            while (b.aj != null){
+                b = b.aj;
+            }
+            a.value = b.value;
+            b.parent.aj = null;
+        }else if(comparator.compare(a.value, a.parent.value) > 0){
+            a.parent.aj = null;
+        }else if(comparator.compare(a.value, a.parent.value) < 0){
+            a.parent.dzax = null;
+        }
+    }
+
+
+
+
+
+
+
+
+
+    public void remuve(popoxakan x){
+        Node3<popoxakan> temp = findpointer(x);
+        if(comparator.compare(temp.parent.value, x) <= 0){
+            temp.parent.aj = null;
+        }else{
+            temp.parent.dzax = null;
+        }
+    }
+    boolean findRecursive(popoxakan x, Node3<popoxakan> temp) {
+        if (temp == null) {
+            return false;
+        }
+        if(comparator.compare(x,temp.value)==0){
+            return true;
+        }
+        if (comparator.compare(x, temp.value) < 0) {
+            return findRecursive(x,temp.dzax);
+        }
+        if (comparator.compare(x, temp.value) > 0) {
+            return findRecursive(x, temp.aj);
+        }
+        return true;
+    }
+    public boolean find(popoxakan x){
+        return findRecursive(x,skizb);
+    }
+
+
+
+
+
+    boolean equalsRecursive(Node3<popoxakan> i,Node3<popoxakan> j){
+        /*if(i == null && j == null){
+            return true;
+        }
+        if (i == null || j == null || i.value != j.value) {
+            return false;
+        }
+        return equals_recursive(i.dzax,j.dzax) && equals_recursive(i.aj,j.aj);
+         */
+
+
+        if((i == null && j != null) || (i!=null && j==null)){
+            return false;
+        }
+        if(i == null && j == null){
+            return true;
+        }
+        if (i.value != j.value) {
+            return false;
+        }
+        return equalsRecursive(i.dzax,j.dzax) && equalsRecursive(i.aj,j.aj);
+    }
+    boolean equals(BinarySearchTree<popoxakan> n){
+        /*
+        Node i = n.skizb;
+        Node j = skizb;
+        boolean fl = equals_recursive(i,j);
+        return fl;
+    */
+        return  equalsRecursive(n.skizb,skizb);
+    }
+
+    boolean notequals2(BinarySearchTree<popoxakan> n){
+        return !equals(n);
+
+    }
+    boolean notequalsRecursive(Node3<popoxakan> i,Node3<popoxakan> j){
+
+        if(i == null && j == null){
+            System.out.println("2");
+            return false;
+        }
+
+        if((i == null && j != null) || (i!=null && j==null)){
+            System.out.println("1");
+            return true;
+        }
+
+        if (i.value != j.value) {
+            System.out.println("3");
+            return true;
+        }
+        return notequalsRecursive(i.dzax,j.dzax) || notequalsRecursive(i.aj,j.aj);
+    }
+
+    //remove(int tiv
+    boolean notEquals(BinarySearchTree<popoxakan> n){
+        Node3<popoxakan> i = n.skizb;
+        Node3<popoxakan> j = skizb;
+        boolean fl = notequalsRecursive(i,j);
+        return fl;
+
+    }
+
+    void printRecursive(Node3<popoxakan> temp){
+        if(temp != null) {
+            printRecursive(temp.dzax);
+            System.out.print(temp.value+" "+"\n");
+            printRecursive(temp.aj);
+        }
+    }
+
+    void print(){
+        printRecursive(skizb);
+    }
+}
+
