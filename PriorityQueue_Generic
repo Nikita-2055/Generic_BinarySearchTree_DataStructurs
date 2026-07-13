@@ -1,0 +1,153 @@
+import java.util.Comparator;
+
+class Node2<anorosh>{
+    anorosh value;
+    Node2<anorosh> next;
+    Node2<anorosh> previous;
+    public Node2(anorosh x){
+        value = x;
+    }
+}
+
+public class PriorityQueue <popoxakan>{
+    public Node2<popoxakan> head;
+    public Node2<popoxakan> tail;
+    Comparator<popoxakan> comparator;
+    public  PriorityQueue(Comparator<popoxakan>  c){
+        comparator = c;
+    }
+    public int qanak = 0;
+
+    public PriorityQueue() {
+        System.out.println("--call of default constructor");
+    }
+
+    Node2<popoxakan> find(popoxakan x){
+        Node2<popoxakan> k = head;
+        while (k != null){
+            if(comparator.compare(x, k.value) == 0){
+                return k;
+            }
+            k = k.next;
+        }
+        return null;
+    }
+
+
+    void push(popoxakan x) {
+        Node2<popoxakan> n = new Node2<>(x);
+
+        if (head == null) {
+            head = tail = n;
+            qanak++;
+            return;
+        }
+
+        if (comparator.compare(x, head.value) <= 0) {
+            n.next = head;
+            head.previous = n;
+            head = n;
+            qanak++;
+            return;
+        }
+
+        if (comparator.compare(x, tail.value) > 0) {
+            n.previous = tail;
+            tail.next = n;
+            tail = n;
+            qanak++;
+            return;
+        }
+
+
+        Node2<popoxakan> k = head;
+        while (k != null && comparator.compare(k.value, x) <= 0) {
+            k = k.next;
+        }
+
+        n.next = k;
+        n.previous = k.previous;
+        k.previous.next = n;
+        k.previous = n;
+
+        qanak++;
+    }
+    /*void push(popoxakan x){
+        Node2<popoxakan> n = new Node2<>(x);
+        if(head == null){
+            head = n;
+            tail = n;
+            qanak++;
+        }else{
+            if(comparator.compare(n.value , tail.value)==-1){
+                head.previous = n;
+                n.next = head;
+                head = n;
+                qanak++;
+                return;
+            }else if(comparator.compare(n.value , tail.value)==1){
+                tail.next = n;
+                n.previous = tail;
+                tail = n;
+                qanak++;
+                return;
+            }else{
+                Node2<popoxakan> k = tail;
+                while(comparator.compare(k.value , x)==1) {
+                    k = k.previous;
+                }
+                k.next.previous = n;
+                n.next = k.next;
+                n.previous = k;
+                k.next = n;
+                qanak++;
+            }
+        }
+    }
+
+     */
+
+
+
+    public String toString(){
+        Node2<popoxakan> a = head;
+        String str = "";
+        while(a != null){
+            str = str + a.value + "\n";
+            a = a.next;
+        }
+        return str;
+    }
+
+    public boolean equals(PriorityQueue<popoxakan> a){
+        if(qanak != a.qanak){
+            return false;
+        }
+        Node2<popoxakan> n = head;
+        Node2<popoxakan> m = a.head;
+        for(int i = 0; i < qanak; i++){
+            if(n.value != m.value){
+                return false;
+            }
+            n = n.next;
+            m = m.next;
+        }
+        return true;
+    }
+    void print(){
+        Node2<popoxakan> a = head;
+        System.out.println( "here--");
+        while(a != null){
+            System.out.println(a.value);
+            a = a.next;
+        }
+    }
+    void printrevers(){
+        Node2<popoxakan> b = tail;
+        System.out.println("revers:");
+        while(b != null){
+            System.out.println(b.value);
+            b = b.previous;
+        }
+    }
+}
