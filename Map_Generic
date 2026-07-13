@@ -1,0 +1,127 @@
+class Node<arajin,erkord>{
+    arajin key;
+    erkord value;
+    Node next;
+    Node previous;
+    public Node(arajin k,erkord v){
+        key = k;
+        value = v;
+
+    }
+}
+public class Map <In,Du>{
+
+
+    public Node<In,Du> head;
+    public Node<In,Du> tail;
+    int count = 0;
+
+    void push(In k,Du v){
+        Node<In,Du> s = new Node<>(k,v);
+        if (find(k)){
+            return;
+        }
+        if(head == null){
+            head = s;
+            tail = s;
+            count++;
+            return;
+        }else {
+            tail.next = s;
+            s.previous = tail;
+            tail = s;
+            count++;
+        }
+    }
+    boolean find(In k){
+        Node<In,Du> a = head;
+        while(a != null){
+            if(a.key == k){
+                return true;
+            }else {
+                a = a.next;
+            }
+        }
+        return false;
+    }
+    void remuve(In k){
+        Node<In,Du> a = head;
+        while(a != null){
+            if(a.key == k){
+                a.previous.next = a.next;
+                a.next.previous = a.previous;
+                return;
+            }else {
+                a = a.next;
+            }
+        }
+    }
+    Node<In,Du> find2(In k){
+        Node<In,Du> n = head;
+        while (n != null){
+            if(n.key == k){
+                return n;
+            }
+            n = n.next;
+        }
+        return null;
+    }
+    void update(In k, Du v){
+        Node<In,Du> a = find2(k);
+        if(a != null){
+            a.value = v;
+        }else {
+            push(k, v);
+        }
+    }
+
+    public String toString(){
+        Node<In,Du> a = head;
+        String str = "";
+        while(a != null){
+            str =str + "key"+a.key+" = "+" value"+a.value+"\n";
+            a = a.next;
+        }
+        return str;
+    }
+    public boolean equals(Map n2){
+        if(count != n2.count){
+            return false;
+        }
+        Node<In,Du> a = head;
+        Node<In,Du> b = n2.head;
+        for(int i = 0; i < count; i++){
+            if(a.key != b.key || a.value != b.value){
+                return false;
+            }
+            a = a.next;
+            b = b.next;
+        }
+        return true;
+    }
+    void print(){
+        Node<In,Du> a = head;
+        while(a != null){
+            System.out.println("key"+a.key+" = "+" value"+a.value);
+            a = a.next;
+        }
+    }
+
+    Du get(In k){
+        Node<In,Du> n = head;
+        while (n != null){
+            if(n.key == k){
+                return n.value;
+            }
+            n = n.next;
+        }
+        return null;
+    }
+    void printRvers(){
+        Node<In,Du> a = tail;
+        while (a != null){
+            System.out.println("key"+a.key+" = "+" value"+a.value);
+            a = a.previous;
+        }
+    }
+}
