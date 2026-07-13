@@ -1,0 +1,39 @@
+class Stack<Anhayt> {
+    Anhayt[] a = (Anhayt[]) new Object[5];
+    int index = 0;
+
+ /*   public void push(int x){
+        if(index < a.length){
+            a[index++] = x;
+        }else{
+            System.out.println("zbaxvac e:");
+        }
+    }
+
+  */
+
+    public Anhayt pop(){
+        if(index > 0){
+            index--;
+            return a[index];
+        }else{
+            System.out.println("zangvaci taracqic durs:");
+            return null;
+        }
+    }
+
+    public void push(Anhayt x){
+        if(index == a.length){
+            throw new IndexOutOfBoundsException("Stack is full");
+        }
+        a[index++] = x;
+    }
+
+    public boolean isEmpty(){
+        return index==0;
+    }
+
+    public boolean isFull(){
+        return index==a.length;
+    }
+}
